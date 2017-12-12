@@ -29,7 +29,8 @@ class AutoEncoder(chainer.Chain):
 
     def __call__(self, x, train):
         h1 = self.activation(self.conv1(x))
-        h2 = F.dropout(self.activation(self.lenc1(h1)), train=train)
+	with chainer.using_config('train', True):
+             h2 = F.dropout(self.activation(self.lenc1(h1)))
         h3 = F.reshape(self.activation(self.ldec1(h2)), (x.data.shape[0], self.n_filters, self.dim1, self.dim1))
         h4 = self.activation(self.deconv1(h3))
         return h4

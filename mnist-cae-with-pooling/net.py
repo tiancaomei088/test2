@@ -36,7 +36,8 @@ class AutoEncoder(chainer.Chain):
         # pool1
         h2 = F.max_pooling_2d(h1, 2, 2)
         # fc1
-        h3 = F.dropout(self.activation(self.lenc1(h2)), train=train)
+	with chainer.using_config('train', True):
+            h3 = F.dropout(self.activation(self.lenc1(h2)))
         # fc2
         h4 = F.reshape(self.activation(self.ldec1(h3)),
                       (x.data.shape[0], self.n_filters, self.dim2, self.dim2))

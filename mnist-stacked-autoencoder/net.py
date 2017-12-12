@@ -21,14 +21,16 @@ class AutoEncoder(chainer.Chain):
         self.activation = {'relu': F.relu, 'sigmoid': F.sigmoid, 'identity': F.identity}[activation]
 
     def __call__(self, x, train=True):
-        h1 = F.dropout(self.activation(self.l1(x)), train=train)
+	with chainer.using_config('train', True):
+            h1 = F.dropout(self.activation(self.l1(x)))
         if self.tied:
             return self.activation(F.linear(h1, F.transpose(self.l1.W), self.decoder_bias))
         else:
             return self.activation(self.l2(h1))
 
     def encode(self, x, train=True):
-        return F.dropout(self.activation(self.l1(x)), train=train)
+	with chainer.using_config('train', True):
+       	    return F.dropout(self.activation(self.l1(x)))
 
     def decode(self, x, train=True):
         if self.tied:

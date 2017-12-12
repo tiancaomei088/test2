@@ -2,7 +2,7 @@ import argparse
 import time
 import sys
 
-import numpy as np
+import cupy as np
 
 import chainer
 from chainer import report, computational_graph

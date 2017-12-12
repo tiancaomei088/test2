@@ -1,15 +1,1 @@
-.DS_Store
-nohup.out
-*.swp
-*.pkl
-*.gz
-*.model
-*.png
-*.dot
-*.pyc
-*.log
-*.out
 
-*/__pycache__
-*/tmp
-*/.ipynb_checkpoints
